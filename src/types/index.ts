@@ -1,5 +1,6 @@
-export type IncomeType = "Wage" | "Pension";
+export type IncomeType = 'Wage' | 'Pension';
 
+// prettier-ignore
 export type Period =
     | "1 day"
     | "2 days"
