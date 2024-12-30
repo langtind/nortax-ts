@@ -2,10 +2,10 @@
 
 A TypeScript client for the Norwegian tax authority’s API, based on the [original Python package](https://github.com/lewiuberg/nortax). This library focuses on fetching Norwegian tax calculations for various income types, periods, and tables.
 
-[![GitHub License](https://img.shields.io/github/license/lewiuberg/nortax?color=blue)](LICENSE)
+[![GitHub License](https://img.shields.io/github/license/langtind/nortax-ts?color=blue)](LICENSE)
 [![npm version](https://img.shields.io/npm/v/nortax-ts.svg?color=blue)](https://www.npmjs.com/package/nortax-ts)
-[![GitHub last commit](https://img.shields.io/github/last-commit/lewiuberg/nortax?color=blue)](https://github.com/lewiuberg/nortax)
-![GitHub search hit counter](https://img.shields.io/github/search/lewiuberg/nortax/nortax-ts?label=nortax-ts%20searches)
+[![GitHub last commit](https://img.shields.io/github/last-commit/langtind/nortax-ts?color=blue)](https://github.com/langtind/nortax-ts)
+![GitHub search hit counter](https://img.shields.io/github/search/langtind/nortax-ts?label=nortax-ts%20searches)
 [![Test](https://github.com/langtind/nortax-ts/actions/workflows/test.yml/badge.svg)](https://github.com/langtind/nortax-ts/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/langtind/nortax-ts/branch/main/graph/badge.svg)](https://codecov.io/gh/langtind/nortax-ts)
 
