@@ -1,0 +1,18 @@
+echo "🔍 Checking formatting..."
+if ! pnpm format:check; then
+    echo "\n❌ Formatting check failed!"
+    echo "👉 Run 'pnpm format' to fix formatting issues"
+    echo "🔍 Then stage the changes and try committing again\n"
+    exit 1
+fi
+echo "✅ Formatting check passed\n"
+
+echo "🧪 Running tests..."
+if ! pnpm test; then
+    echo "\n❌ Tests failed!"
+    echo "👉 Fix the failing tests and try again\n"
+    exit 1
+fi
+echo "✅ All tests passed\n"
+
+echo "🎉 All pre-commit checks passed!\n"
