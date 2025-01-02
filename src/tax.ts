@@ -7,11 +7,16 @@
  */
 
 import { IncomeType, Period } from './types';
-import { ValidTables2020To2024, ValidTables2025, isValidTableForYear } from './types';
+import {
+  ValidTablesTo2019,
+  ValidTables2020To2024,
+  ValidTables2025,
+  isValidTableForYear,
+} from './types';
 import { BASE_URL, PERIODS, ALIASES } from './constants';
 import { TaxApiError, TaxNetworkError } from './errors';
 
-type ValidTable = ValidTables2020To2024 | ValidTables2025;
+type ValidTable = ValidTablesTo2019 | ValidTables2020To2024 | ValidTables2025;
 
 export class Tax {
   private grossIncome: number;
