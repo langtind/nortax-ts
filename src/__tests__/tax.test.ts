@@ -21,7 +21,7 @@ describe('Tax', () => {
       const deduction = await tax.getDeduction();
 
       expect(deduction).toBe(0);
-      expect(mockFetch).toHaveBeenCalledWith(expect.stringContaining('valgtLonn=-5000'));
+      expect(mockFetch).toHaveBeenCalledWith(expect.stringContaining('bruttoloenn=-5000'));
     });
 
     it('should handle zero gross income', async () => {
@@ -47,7 +47,7 @@ describe('Tax', () => {
       const deduction = await tax.getDeduction();
 
       expect(deduction).toBe(300000);
-      expect(mockFetch).toHaveBeenCalledWith(expect.stringContaining(`valgtLonn=${largeIncome}`));
+      expect(mockFetch).toHaveBeenCalledWith(expect.stringContaining(`bruttoloenn=${largeIncome}`));
     });
 
     it('should handle decimal income values', async () => {
@@ -60,7 +60,7 @@ describe('Tax', () => {
       await tax.getDeduction();
 
       // Should use integer value in API call
-      expect(mockFetch).toHaveBeenCalledWith(expect.stringContaining('valgtLonn=25000'));
+      expect(mockFetch).toHaveBeenCalledWith(expect.stringContaining('bruttoloenn=25001'));
     });
   });
 
@@ -200,7 +200,7 @@ describe('Tax', () => {
       const tax = new Tax(25000, table as any);
       await tax.getDeduction();
 
-      expect(mockFetch).toHaveBeenCalledWith(expect.stringContaining(`valgtTabell=${table}`));
+      expect(mockFetch).toHaveBeenCalledWith(expect.stringContaining(`tabell=${table}`));
     });
   });
 
@@ -214,7 +214,7 @@ describe('Tax', () => {
       const tax = new Tax(25000, '7100', 'Wage');
       await tax.getDeduction();
 
-      expect(mockFetch).toHaveBeenCalledWith(expect.stringContaining('Lonn'));
+      expect(mockFetch).toHaveBeenCalledWith(expect.stringContaining('LONN'));
     });
 
     it('should handle Pension income type correctly', async () => {
@@ -226,7 +226,7 @@ describe('Tax', () => {
       const tax = new Tax(25000, '7100', 'Pension');
       await tax.getDeduction();
 
-      expect(mockFetch).toHaveBeenCalledWith(expect.stringContaining('Pensjon'));
+      expect(mockFetch).toHaveBeenCalledWith(expect.stringContaining('PENSJON'));
     });
   });
 
@@ -280,7 +280,7 @@ describe('Tax', () => {
 
   describe('getFullDetails', () => {
     it('should return formatted string with all tax details', async () => {
-      // Mock the fetch call twice since getDeduction is called twice
+      // Mock both fetch calls needed for getFullDetails
       mockFetch
         .mockResolvedValueOnce({
           ok: true,
@@ -291,23 +291,19 @@ describe('Tax', () => {
           json: () => Promise.resolve(6735),
         });
 
-      const tax = new Tax(
-        25000, // grossIncome
-        '7100', // taxTable
-        'Pension', // incomeType
-        '2 weeks', // period
-        2024 // year
-      );
+      const tax = new Tax(25000, '7100', 'Pension', '2 weeks', 2024);
 
       const details = await tax.getFullDetails();
-      expect(details).toContain('URL: str = https://api-tabellkort.app.skatteetaten.no/');
+      expect(details).toContain(
+        `URL: str = https://trekktabell.formueinntekt.skatt.skatteetaten.no/api/trekktabell/beregn`
+      );
       expect(details).toContain('Tax table: valid_tables = 7100');
       expect(details).toContain('Income type: income_type = Pension');
       expect(details).toContain('Period: period = 2 weeks');
       expect(details).toContain('Year: int = 2024');
       expect(details).toContain('Gross income: int = 25000');
       expect(details).toContain('Tax deduction: int = 6735');
-      expect(details).toContain('Net income: int = 18265'); // 25000 - 6735
+      expect(details).toContain('Net income: int = 18265');
     });
 
     it('should handle API errors gracefully', async () => {
@@ -382,18 +378,12 @@ describe('Tax', () => {
 
   describe('toString', () => {
     it('should return formatted string with basic tax details', () => {
-      const tax = new Tax(
-        25000, // grossIncome
-        '7100', // taxTable
-        'Pension', // incomeType
-        '2 weeks', // period
-        2024 // year
-      );
+      const tax = new Tax(25000, '7100', 'Pension', '2 weeks', 2024);
 
       const result = tax.toString();
 
       // Check each line individually
-      expect(result).toContain('URL: str = https://api-tabellkort.app.skatteetaten.no/');
+      expect(result).toContain(`URL: str = `);
       expect(result).toContain('Tax table: valid_tables = 7100');
       expect(result).toContain('Income type: income_type = Pension');
       expect(result).toContain('Period: period = 2 weeks');
@@ -422,16 +412,11 @@ describe('Tax', () => {
   });
 
   describe('Symbol.toStringTag', () => {
-    it('should return correctly formatted string representation', () => {
-      const tax = new Tax(
-        25000, // grossIncome
-        '7100', // taxTable
-        'Pension', // incomeType
-        '2 weeks', // period
-        2024 // year
-      );
+    it('should return formatted string with tax instance details', () => {
+      const tax = new Tax(25000, '7100', 'Pension', '2 weeks', 2024);
 
       const result = tax[Symbol.toStringTag]();
+
       expect(result).toBe(
         'Tax(gross_income=25000, tax_table="7100", income_type="Pension", period="2 weeks", year=2024)'
       );

@@ -113,5 +113,18 @@ const ENABLE_INTEGRATION_TESTS = process.env.ENABLE_INTEGRATION_TESTS === 'true'
       const taxTable = await tax.getWholeTable();
       expect(taxTable['50000']).toBe(11333);
     });
+
+    it('should return correct deduction for specific 2025 scenario', async () => {
+      const tax = new Tax(
+        99687.588, // Exact taxable income
+        tableNumber,
+        'Wage',
+        'Monthly',
+        2025
+      );
+
+      const deduction = await tax.getDeduction();
+      expect(deduction).toBe(36102); // Updated expected value from new API
+    });
   });
 });

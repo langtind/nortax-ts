@@ -1,6 +1,6 @@
 # NorTax-TS <!-- omit in toc -->
 
-A TypeScript client for the Norwegian tax authority’s API, based on the [original Python package](https://github.com/lewiuberg/nortax). This library focuses on fetching Norwegian tax calculations for various income types, periods, and tables.
+A TypeScript client for the Norwegian tax authority's API, based on the [original Python package](https://github.com/lewiuberg/nortax). This library focuses on fetching Norwegian tax calculations for various income types, periods, and tables.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![NPM Version](https://img.shields.io/npm/v/nortax-ts.svg?color=blue)](https://www.npmjs.com/package/nortax-ts)
@@ -81,7 +81,7 @@ console.log(fullDetails);
 **Example output (for `getFullDetails()`):**
 
 ```shell
-URL: str = https://api-tabellkort.app.skatteetaten.no/?valgtTabell=7100&valgtInntektType=Pensjon&valgtPeriode=PERIODE_14_DAGER&valgtLonn=25000&visHeleTabellen=false&valgtAar=2024&hentHeleTabellen=false
+URL: str = https://trekktabell.formueinntekt.skatt.skatteetaten.no/api/trekktabell/beregn?valgtTabell=7100&valgtInntektType=Pensjon&valgtPeriode=PERIODE_14_DAGER&valgtLonn=25000&valgtAar=2024
 Tax table: valid_tables = 7100
 Income type: income_type = Pension
 Period: period = 2 weeks

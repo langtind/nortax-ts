@@ -1,8 +1,10 @@
-export const BASE_URL = 'https://api-tabellkort.app.skatteetaten.no/';
+export const BASE_URL = 'https://trekktabell.formueinntekt.skatt.skatteetaten.no/api/trekktabell';
+export const CALCULATE_URL = `${BASE_URL}/beregn`;
+export const TABLE_URL = `${BASE_URL}/tabell`;
 
 export const PERIODS: Record<string, string> = {
-  Wage: 'Lonn',
-  Pension: 'Pensjon',
+  Wage: 'LONN',
+  Pension: 'PENSJON',
   '1 day': 'PERIODE_1_DAG',
   '2 days': 'PERIODE_2_DAGER',
   '3 days': 'PERIODE_3_DAGER',
@@ -14,11 +16,11 @@ export const PERIODS: Record<string, string> = {
 
 export const ALIASES = {
   allDeductions: 'alleTrekk',
-  chosenTable: 'valgtTabell',
-  chosenIncomeType: 'valgtInntektType',
-  chosenPeriod: 'valgtPeriode',
-  chosenIncome: 'valgtLonn',
+  chosenTable: 'tabell',
+  chosenIncomeType: 'inntektstype',
+  chosenPeriod: 'periode',
+  chosenIncome: 'bruttoloenn',
   showWholeTable: 'visHeleTabellen',
-  chosenYear: 'valgtAar',
+  chosenYear: 'iaar',
   getWholeTable: 'hentHeleTabellen',
 } as const;

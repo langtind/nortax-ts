@@ -13,7 +13,7 @@ import {
   ValidTables2025,
   isValidTableForYear,
 } from './types';
-import { BASE_URL, PERIODS, ALIASES } from './constants';
+import { BASE_URL, CALCULATE_URL, TABLE_URL, PERIODS, ALIASES } from './constants';
 import { TaxApiError, TaxNetworkError } from './errors';
 
 type ValidTable = ValidTablesTo2019 | ValidTables2020To2024 | ValidTables2025;
@@ -38,13 +38,13 @@ export class Tax {
       throw new Error(`Invalid tax table "${taxTable}" for year ${year}`);
     }
 
-    this.grossIncome = grossIncome;
+    this.grossIncome = Math.round(grossIncome);
     this.taxTable = taxTable;
     this.incomeType = incomeType;
     this.period = period;
     this.year = year;
     this.returnWholeTable = false;
-    this.url = BASE_URL;
+    this.url = '';
   }
 
   private async makeApiCall(url: string): Promise<any> {
@@ -72,22 +72,21 @@ export class Tax {
   }
 
   private updateUrl(): void {
+    const baseUrl = this.returnWholeTable ? TABLE_URL : CALCULATE_URL;
     this.url =
-      `${BASE_URL}?` +
+      `${baseUrl}?` +
       `${ALIASES.chosenTable}=${this.taxTable}&` +
-      `${ALIASES.chosenIncomeType}=${this.incomeType}&` +
-      `${ALIASES.chosenPeriod}=${this.period}&` +
-      `${ALIASES.chosenIncome}=${this.grossIncome}&` +
-      `${ALIASES.showWholeTable}=${this.returnWholeTable}&` +
-      `${ALIASES.chosenYear}=${this.year}&` +
-      `${ALIASES.getWholeTable}=${this.returnWholeTable}`;
+      `${ALIASES.chosenIncomeType}=${this.incomeType === 'Wage' ? 'LONN' : 'PENSJON'}&` +
+      `${ALIASES.chosenPeriod}=${PERIODS[this.period]}&` +
+      `${ALIASES.chosenYear}=${this.year}`;
 
-    Object.entries(PERIODS).forEach(([key, value]) => {
-      this.url = this.url.replace(key, value);
-    });
+    if (!this.returnWholeTable) {
+      this.url += `&${ALIASES.chosenIncome}=${this.grossIncome}`;
+    }
   }
 
   async getDeduction(): Promise<number> {
+    this.returnWholeTable = false;
     this.updateUrl();
     const data = await this.makeApiCall(this.url);
     return parseInt(data);
@@ -103,7 +102,7 @@ export class Tax {
     this.updateUrl();
     const data = await this.makeApiCall(this.url);
     this.returnWholeTable = false;
-    return data[ALIASES.allDeductions];
+    return data.alleTrekk;
   }
 
   async getFullDetails(): Promise<string> {
