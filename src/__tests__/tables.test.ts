@@ -25,9 +25,16 @@ describe('Tax Table Validation', () => {
     });
   });
 
+  describe('2026 tables', () => {
+    it('should validate correct tables for 2026', () => {
+      expect(isValidTableForYear('8150', 2026)).toBe(true);
+      expect(isValidTableForYear('7100', 2026)).toBe(false);
+    });
+  });
+
   describe('Invalid years', () => {
     it('should return false for years outside valid range', () => {
-      expect(isValidTableForYear('8150', 2026)).toBe(false);
+      expect(isValidTableForYear('8150', 2027)).toBe(false);
     });
   });
 });

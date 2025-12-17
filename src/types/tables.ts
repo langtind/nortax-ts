@@ -54,7 +54,7 @@ export function isValidTableForYear(table: string, year: number): boolean {
     return isValidTableTo2019(table);
   } else if (year >= 2020 && year <= 2024) {
     return isValidTable2020To2024(table);
-  } else if (year === 2025) {
+  } else if (year === 2025 || year === 2026) {
     return isValidTable2025(table);
   }
   return false;
