@@ -182,13 +182,14 @@ Example usage:
 const tax2024 = new Tax(50000, '7100', 'Wage', 'Monthly', 2024);
 ```
 
-#### 2025 Tables
-New table system starting with 8xxx series (8100-8133, 8150, 8160, etc.).
+#### 2025-2026 Tables
+New table system starting with 8xxx series for deduction tables (8000-8400) and 9xxx series for additional tables (9010-9400).
 
 Example usage:
 ```typescript
-// Valid only for 2025
+// Valid for 2025 and 2026
 const tax2025 = new Tax(50000, '8150', 'Wage', 'Monthly', 2025);
+const tax2026 = new Tax(50000, '8150', 'Wage', 'Monthly', 2026);
 ```
 >Note: Using a tax table with an incorrect year (e.g., trying to use table '8150' in 2024) will throw an error.
 
@@ -203,7 +204,7 @@ try {
 ```
 For a complete list of valid tables per year, see:
 * [2020-2024 Tables](https://www.skatteetaten.no/bedrift-og-organisasjon/arbeidsgiver/skattekort-og-skattetrekk/forskuddstrekk/oversikt-over-tabelltrinnene-for-trekktabeller-fra-og-med-2020/)
-* [2025 Tables](https://www.skatteetaten.no/bedrift-og-organisasjon/arbeidsgiver/skattekort-og-skattetrekk/forskuddstrekk/oversikt-over-tabelltrinnene-for-trekktabeller-fra-og-med-2025/)
+* [2025-2026 Tables](https://www.skatteetaten.no/bedrift-og-organisasjon/arbeidsgiver/skattekort-og-skattetrekk/forskuddstrekk/oversikt-over-tabelltrinnene-for-trekktabeller-fra-og-med-2025/)
 
 ## License
 
